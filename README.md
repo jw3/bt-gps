@@ -33,6 +33,10 @@ Should look at putting the init into an exposed function call.
 
 ### gps hardware
 
+device ids are generated from mac and some process i cant define at this point
+
+`00:19:01:49:32:33` becomes `0019,01,493233`
+
 #### dual 150a
 
 password `1234`
