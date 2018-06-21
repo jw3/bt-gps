@@ -23,6 +23,8 @@ AT+BIND=[csv-device-id]
 AT+LINK=[csv-device-id]
 ```
 
+#### manual reconnect
+
 After connected once, all that is needed is
 
 ```
@@ -30,6 +32,15 @@ AT+LINK=[csv-device-id]
 ```
 
 Should look at putting the init into an exposed function call.
+
+#### auto-connect
+
+Using the connection mode command you can switch between manual and automatic connections.
+
+ `AT+CMODE` will be `0` by default.  After successfully linking the devices change it to `1`.
+ 
+Restart the device and it should pair with the previously paired device.
+
 
 ### gps hardware
 
