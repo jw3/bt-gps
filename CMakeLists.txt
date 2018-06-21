@@ -20,5 +20,6 @@ endif ()
 message("\n=============================== Configuring firmware for the -=-= ${PLATFORM} =-=- ===============================\n")
 configure_file(common/flash.in ${CMAKE_BINARY_DIR}/flash)
 
+include(${PLATFORM})
 include(particle)
 add_particle_remote_app(firmware)
