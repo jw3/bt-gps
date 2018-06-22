@@ -2,6 +2,8 @@
 #include <TinyGPS++.h>
 #include <experimental/optional>
 
+SYSTEM_THREAD(ENABLED)
+
 using std::experimental::nullopt;
 using std::experimental::optional;
 using std::experimental::make_optional;
