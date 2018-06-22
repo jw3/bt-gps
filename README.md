@@ -4,6 +4,11 @@ bt gps
 asset tracker type functionality over bluetooth
 
 
+### events
+
+- `R` - device ready
+- `G` - gps event in format of `lat:lon`
+
 
 ### bluetooth hardware
 
