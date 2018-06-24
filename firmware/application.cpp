@@ -7,6 +7,7 @@ SYSTEM_THREAD(ENABLED)
 using std::experimental::nullopt;
 using std::experimental::optional;
 using std::experimental::make_optional;
+using OptLocation = optional<TinyGPSLocation>;
 
 constexpr int buffer_sz = 32;
 std::array<char, buffer_sz> buffer;
@@ -14,7 +15,7 @@ std::array<char, buffer_sz> buffer;
 system_tick_t lastEvent = 0;
 system_tick_t eventInterval = 5000;
 
-optional<TinyGPSLocation> lastPos = nullopt;
+OptLocation lastPos = nullopt;
 double moveThreshold = 2;
 
 TinyGPSPlus gps;
