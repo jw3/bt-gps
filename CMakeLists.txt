@@ -24,4 +24,4 @@ include(${PLATFORM})
 include(particle)
 include(TinyGpsPlus)
 
-add_particle_remote_app(firmware TinyGpsPlus)
+add_particle_remote_app(bt-serial TinyGpsPlus)
