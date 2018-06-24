@@ -22,7 +22,9 @@ configure_file(common/flash.in ${CMAKE_BINARY_DIR}/flash)
 
 include(${PLATFORM})
 include(particle)
+
+include(LIS3DH)
 include(TinyGpsPlus)
 
 add_particle_remote_app(bt-serial TinyGpsPlus)
-add_particle_remote_app(asset-tracker TinyGpsPlus)
+add_particle_remote_app(asset-tracker TinyGpsPlus LIS3DH)

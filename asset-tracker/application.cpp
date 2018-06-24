@@ -1,5 +1,6 @@
 #include <Particle.h>
 #include <TinyGPS++.h>
+#include <LIS3DH.h>
 #include <experimental/optional>
 
 SYSTEM_THREAD(ENABLED)
@@ -19,6 +20,7 @@ OptLocation lastPos = nullopt;
 double moveThreshold = 2;
 
 TinyGPSPlus gps;
+LIS3DHSPI accel(SPI, A2, WKP);
 
 bool movedAtLeast(double m, TinyGPSLocation from) {
    return m <= TinyGPSPlus::distanceBetween(
