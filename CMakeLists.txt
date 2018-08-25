@@ -26,4 +26,4 @@ include(particle)
 include(LIS3DH)
 include(TinyGpsPlus)
 
-add_particle_remote_app(asset-tracker TinyGpsPlus LIS3DH)
+add_particle_remote_app(firmware TinyGpsPlus LIS3DH)
