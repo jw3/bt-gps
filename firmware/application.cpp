@@ -7,13 +7,15 @@
 #include <LIS3DH.h>
 #endif
 
+using meters = double;
+using tick = system_tick_t;
 using std::experimental::nullopt;
 using std::experimental::optional;
 using std::experimental::make_optional;
 using OptLocation = optional<TinyGPSLocation>;
 
-bool movedAtLeast(double, TinyGPSLocation&, TinyGPSPlus&);
-bool waitedAtLeast(system_tick_t, system_tick_t, const std::function<system_tick_t(void)>&);
+bool movedAtLeast(meters, TinyGPSLocation&, TinyGPSPlus&);
+bool waitedAtLeast(tick, tick, const std::function<tick(void)>&);
 
 SYSTEM_THREAD(ENABLED)
 
@@ -26,11 +28,11 @@ constexpr int serial1br = 38400;
 constexpr int buffer_sz = 32;
 std::array<char, buffer_sz> buffer;
 
-system_tick_t lastEvent = 0;
-system_tick_t eventInterval = 5000;
+tick lastEvent = 0;
+tick eventInterval = 5000;
 
 OptLocation lastPos = nullopt;
-double moveThreshold = 2;
+meters moveThreshold = 2;
 
 TinyGPSPlus gps;
 
@@ -73,14 +75,12 @@ void serialEvent1() {
 void loop() {
 }
 
-bool movedAtLeast(double m, TinyGPSLocation& from, TinyGPSPlus& gps) {
+bool movedAtLeast(meters m, TinyGPSLocation& from, TinyGPSPlus& gps) {
    return m <= TinyGPSPlus::distanceBetween(
          gps.location.lat(), gps.location.lng(),
          from.lat(), from.lng());
 }
 
-bool waitedAtLeast(system_tick_t prev,
-                   system_tick_t interval,
-                   const std::function<system_tick_t(void)>& t) {
+bool waitedAtLeast(tick prev, tick interval, const std::function<tick(void)>& t) {
    return t() - prev > interval;
 }
