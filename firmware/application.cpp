@@ -44,6 +44,7 @@ void setup() {
    Serial1.begin(serial1br);
 
 #ifdef ASSET_TRACKER
+   // turn on the asset tracker gps
    pinMode(D6, OUTPUT);
    digitalWrite(D6, LOW);
 #endif

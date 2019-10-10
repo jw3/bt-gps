@@ -1,27 +1,37 @@
 cmake_minimum_required(VERSION 3.0)
-project(tracker)
 
-set(CMAKE_CXX_STANDARD 14)
-
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
-set(CMAKE_VERBOSE_MAKEFILE OFF)
-
-set(BUILD_DIR ${CMAKE_BINARY_DIR})
-set(GCC_ARM_PATH /usr/local/gcc-arm/bin/)
-set(FIRMWARE_DIR /usr/local/src/particle/firmware)
-
-if (NOT PLATFORM)
-    set(PLATFORM electron)
-    message(STATUS "defaulting to ${PLATFORM} platform, override with -DPLATFORM")
-elseif (NOT PLATFORM MATCHES "^photon$|^electron$")
-    message(FATAL_ERROR "invalid platform [${PLATFORM}] (choose 'photon' or 'electron')")
+if (NOT CROSS_COMPILER_PREFIX)
+    set(CROSS_COMPILER_PREFIX "/usr/local/gcc-arm")
 endif ()
 
-message("\n=============================== Configuring firmware for the -=-= ${PLATFORM} =-=- ===============================\n")
-configure_file(common/flash.in ${CMAKE_BINARY_DIR}/flash)
+set(CMAKE_SYSTEM_NAME Generic)
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
-include(${PLATFORM})
-include(particle)
+set(CMAKE_C_COMPILER "${CROSS_COMPILER_PREFIX}/bin/arm-none-eabi-gcc")
+set(CMAKE_CXX_COMPILER "${CROSS_COMPILER_PREFIX}/bin/arm-none-eabi-g++")
+set(CMAKE_ASM_COMPILER "${CROSS_COMPILER_PREFIX}/bin/arm-none-eabi-as")
+set(CMAKE_AR "${CROSS_COMPILER_PREFIX}/bin/arm-none-eabi-ar")
+set(CMAKE_RANLIB "${CROSS_COMPILER_PREFIX}/bin/arm-none-eabi-ranlib")
+
+project(tracker)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_VERBOSE_MAKEFILE OFF)
+
+#set(LDFLAGS "--specs=nosys.specs")
+
+if (NOT EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+    message(FATAL_ERROR "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first")
+endif ()
+
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup(NO_OUTPUT_DIRS)
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CONAN_CMAKE_MODULE_PATH} ${CMAKE_MODULE_PATH})
+
+find_package(Particle)
+
+if (ASSET_TRACKER)
+    add_definitions(-DASSET_TRACKER)
+endif ()
 
 include(LIS3DH)
 include(TinyGpsPlus)
