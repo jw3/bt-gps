@@ -2,10 +2,13 @@
 
 if [[ -z "$1" ]]; then echo "usage: $0 <platform>"; exit 1; fi
 
-
 cmake_args=""
 platform_arg="$1"
-if [[ "platform_arg" -eq "asset-tracker" ]]; then
+
+readonly cross_compiler_root=${CROSS_COMPILER_ROOT:-/usr/local/gcc-arm}
+readonly compiler_major_version=$("${cross_compiler_root}/bin/arm-none-eabi-gcc" -dumpspecs | grep *version -A1 | tail -n1 | cut -d. -f1)
+
+if [[ "$platform_arg" == "asset-tracker" ]]; then
   platform_arg="electron"
   cmake_args="-DASSET_TRACKER=1 $cmake_args"
 fi
@@ -21,6 +24,6 @@ fi
 if [[ ! -d "$builddir" ]]; then mkdir "$builddir"; fi
 
 cd "$builddir"
-conan install .. -s compiler.version=5
+conan install .. -s compiler.version="$compiler_major_version"
 cmake .. ${cmake_args}
 make -j1

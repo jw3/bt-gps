@@ -1,9 +1,6 @@
 tracker
 ===
 
-asset tracking functionality from a serial connection
-
-
 ### events
 
 - `R` - device ready
