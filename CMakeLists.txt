@@ -37,4 +37,5 @@ endif ()
 include(LIS3DH)
 include(TinyGpsPlus)
 
-add_particle_remote_app(firmware TinyGpsPlus LIS3DH)
+add_particle_remote_app(receiver TinyGpsPlus LIS3DH)
+add_particle_remote_app(transmitter TinyGpsPlus LIS3DH)
