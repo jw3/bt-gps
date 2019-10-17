@@ -36,6 +36,10 @@ meters moveThreshold = 2;
 
 TinyGPSPlus gps;
 
+const String Id = String(CloudClass::deviceID()).substring(0, 6);
+const String ReadyEvent = String("R/") + Id;
+const String MovedEvent = String("M/") + Id;
+
 #ifdef ASSET_TRACKER
 LIS3DHSPI accel(SPI, A2, WKP);
 #endif
@@ -49,7 +53,7 @@ void setup() {
    digitalWrite(D6, LOW);
 #endif
 
-   Particle.publish("R", PRIVATE);
+   Particle.publish(ReadyEvent, PRIVATE);
 }
 
 void serialEvent1() {
@@ -65,7 +69,7 @@ void serialEvent1() {
 
                lastEvent = millis();
                lastPos = make_optional(location);
-               Particle.publish("G", str, PRIVATE);
+               Particle.publish(MovedEvent, str, PRIVATE);
             }
          }
       }
