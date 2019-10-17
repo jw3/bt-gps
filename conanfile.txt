@@ -1,7 +1,7 @@
 [requires]
-  particle-common/0.2.2@jw3/stable
-  TinyGpsPlus/0.2.2@jw3/stable
-  LIS3DH/0.2.2@jw3/stable
+  particle-common/0.3.0@jw3/stable
+  TinyGpsPlus/0.3.0@jw3/stable
+  LIS3DH/0.3.0@jw3/stable
 
 [generators]
   cmake
