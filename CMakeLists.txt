@@ -35,7 +35,7 @@ if (ASSET_TRACKER)
 endif ()
 
 include(LIS3DH)
-include(TinyGpsPlus)
+include(NeoGPS)
 
-add_particle_remote_app(receiver TinyGpsPlus LIS3DH)
-add_particle_remote_app(transmitter TinyGpsPlus LIS3DH)
+add_particle_remote_app(receiver)
+add_particle_remote_app(transmitter NeoGPS LIS3DH)
