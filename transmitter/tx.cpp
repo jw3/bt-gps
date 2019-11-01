@@ -72,15 +72,15 @@ void loop() {
    while(gps.available(gpsPort)) {
       fix = gps.read();
 
-      if(fix.valid.location && waitedAtLeast(lastEvent, eventInterval, millis)) {
-         auto l = gps.fix().location;
-         if(!lastPos || movedAtLeast(moveThreshold, *lastPos, l)) {
-            auto lat = String(l.latF(), 6);
-            auto lon = String(l.lonF(), 6);
-            auto str = String::format("%s:%s", lat.c_str(), lon.c_str());
+      if(fix.valid.location) {
+         if(!lastPos || movedAtLeast(moveThreshold, *lastPos, fix.location) || waitedAtLeast(lastEvent, eventInterval, millis)) {
+            auto lat = String(fix.location.latF(), 6);
+            auto lon = String(fix.location.lonF(), 6);
+            auto mph = String(static_cast<uint8_t>(fix.speed_mph()));
+            auto str = String::format("%s:%s:%s", lat.c_str(), lon.c_str(), mph.c_str());
 
             lastEvent = millis();
-            lastPos = make_optional(l);
+            lastPos = make_optional(fix.location);
             Particle.publish(MovedEvent, str, PRIVATE);
          }
       }
