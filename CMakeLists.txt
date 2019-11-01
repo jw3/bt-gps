@@ -34,8 +34,11 @@ if (ASSET_TRACKER)
     add_definitions(-DASSET_TRACKER)
 endif ()
 
+include_directories(${CMAKE_SOURCE_DIR})
+
 include(LIS3DH)
 include(NeoGPS)
 
 add_particle_remote_app(receiver)
 add_particle_remote_app(transmitter NeoGPS LIS3DH)
+add_particle_remote_app(transceiver NeoGPS LIS3DH)

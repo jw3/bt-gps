@@ -3,8 +3,7 @@
 #include <experimental/optional>
 
 #include <NMEAGPS.h>
-
-auto gpsPort = Serial1;
+#include <init.h>
 
 using meters = double;
 using tick = system_tick_t;
@@ -21,11 +20,7 @@ bool waitedAtLeast(tick, tick, const std::function<tick(void)>&);
 
 SYSTEM_THREAD(ENABLED)
 
-#ifdef ASSET_TRACKER
-constexpr int serial1br = 9600;
-#else
-constexpr int serial1br = 38400;
-#endif
+
 
 constexpr int buffer_sz = 32;
 std::array<char, buffer_sz> buffer;
@@ -44,17 +39,7 @@ const String ReadyEvent = String("R/") + Id;
 const String MovedEvent = String("M/") + Id;
 
 void setup() {
-   gpsPort.begin(serial1br);
-
-#ifdef ASSET_TRACKER
-   // turn on the asset tracker gps
-   pinMode(D6, OUTPUT);
-   digitalWrite(D6, LOW);
-
-   constexpr uint8_t ExternalAntenna[] = {0xB5, 0x62, 0x06, 0x13, 0x04, 0x00, 0x01, 0x00, 0xF0, 0x7D, 0x8B, 0x2E};
-   gpsPort.write(ExternalAntenna, sizeof(ExternalAntenna));
-#endif
-
+   init();
    Particle.publish(ReadyEvent, PRIVATE);
 }
 
