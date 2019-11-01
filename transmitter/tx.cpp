@@ -7,11 +7,8 @@
 #endif
 
 #include <NMEAGPS.h>
-#include <GPSport.h>
 
 auto gpsPort = Serial1;
-
-constexpr uint8_t ExternalAntenna[] = {0xB5, 0x62, 0x06, 0x13, 0x04, 0x00, 0x01, 0x00, 0xF0, 0x7D, 0x8B, 0x2E};
 
 using meters = double;
 using tick = system_tick_t;
@@ -59,6 +56,8 @@ void setup() {
    // turn on the asset tracker gps
    pinMode(D6, OUTPUT);
    digitalWrite(D6, LOW);
+
+   constexpr uint8_t ExternalAntenna[] = {0xB5, 0x62, 0x06, 0x13, 0x04, 0x00, 0x01, 0x00, 0xF0, 0x7D, 0x8B, 0x2E};
    gpsPort.write(ExternalAntenna, sizeof(ExternalAntenna));
 #endif
 
