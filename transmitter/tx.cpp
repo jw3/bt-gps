@@ -2,10 +2,6 @@
 #include <functional>
 #include <experimental/optional>
 
-#ifdef ASSET_TRACKER
-#include <LIS3DH.h>
-#endif
-
 #include <NMEAGPS.h>
 
 auto gpsPort = Serial1;
@@ -43,11 +39,6 @@ meters moveThreshold = 2;
 const String Id = String(CloudClass::deviceID()).substring(0, 6);
 const String ReadyEvent = String("R/") + Id;
 const String MovedEvent = String("M/") + Id;
-
-#ifdef ASSET_TRACKER
-LIS3DHSPI accel(SPI, A2, WKP);
-#endif
-
 
 void setup() {
    gpsPort.begin(serial1br);
