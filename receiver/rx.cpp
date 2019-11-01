@@ -1,12 +1,10 @@
 #include <Particle.h>
+#include <rx.h>
 
-constexpr int serial1br = 9600;
-
-void transmit(const char* e, const char* d) {
-   Serial1.printlnf("%s:%s", e, d);
-}
+constexpr int baudrate = 9600;
+Receiver rx(Serial1);
 
 void setup() {
-   Particle.subscribe("M", transmit, MY_DEVICES);
-   Serial1.begin(serial1br);
+   rx.begin(baudrate);
+   Particle.subscribe("M", &Receiver::transmit, &rx, MY_DEVICES);
 }
