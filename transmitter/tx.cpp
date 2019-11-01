@@ -30,6 +30,9 @@ constexpr int serial1br = 38400;
 constexpr int buffer_sz = 32;
 std::array<char, buffer_sz> buffer;
 
+NMEAGPS gps;
+gps_fix fix;
+
 tick lastEvent = 0;
 tick eventInterval = 5000;
 
@@ -55,10 +58,6 @@ void setup() {
    Particle.publish(ReadyEvent, PRIVATE);
 }
 
-//--------------------------
-
-NMEAGPS gps;
-gps_fix fix;
 void loop() {
    while(gps.available(gpsPort)) {
       fix = gps.read();
@@ -77,7 +76,6 @@ void loop() {
       }
    }
 }
-
 
 bool movedAtLeast(meters m, Location& from, Location& to) {
    return m <= from.DistanceKm(to) * 1000;
