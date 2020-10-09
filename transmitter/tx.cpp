@@ -26,11 +26,13 @@ std::array<char, buffer_sz> buffer;
 NMEAGPS gps;
 gps_fix fix;
 
-tick lastEvent = 0;
-tick eventInterval = 5000;
+constexpr tick EventInterval = 5000;
+constexpr tick MaxConnectDuration = 10000;
+constexpr tick ConnectPauseDuration = 1000;
 
-tick connectingSince = 0;
+tick lastEvent = 0;
 tick disconnectedAt = 0;
+tick connectingSince = 0;
 
 OptLocation lastPos = nullopt;
 meters moveThreshold = 2;
@@ -56,7 +58,7 @@ void loop() {
          fix = gps.read();
 
          if(fix.valid.location) {
-            if(!lastPos || movedAtLeast(moveThreshold, *lastPos, fix.location) || waitedAtLeast(lastEvent, eventInterval, millis)) {
+            if(!lastPos || movedAtLeast(moveThreshold, *lastPos, fix.location) || waitedAtLeast(lastEvent, EventInterval, millis)) {
                auto lat = String(fix.location.latF(), 6);
                auto lon = String(fix.location.lonF(), 6);
                auto mph = String(static_cast<uint8_t>(fix.speed_mph()));
@@ -70,12 +72,14 @@ void loop() {
       }
    }
    else {
-      if(connectingSince && waitedAtLeast(connectingSince, 5000, millis)) {
-         Cellular.disconnect();
-         disconnectedAt = millis();
+      if(connectingSince && waitedAtLeast(connectingSince, MaxConnectDuration, millis)) {
+         if(!Cellular.ready()) {
+            Cellular.disconnect();
+            disconnectedAt = millis();
+         }
          connectingSince = 0;
       }
-      else if(disconnectedAt && waitedAtLeast(disconnectedAt, 1000, millis)) {
+      else if(disconnectedAt && waitedAtLeast(disconnectedAt, ConnectPauseDuration, millis)) {
          Cellular.connect();
          connectingSince = millis();
          disconnectedAt = 0;
