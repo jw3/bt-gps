@@ -1,7 +1,7 @@
 [requires]
-  particle-common/0.3.0@jw3/stable
-  NeoGPS/0.3.0@jw3/stable
-  LIS3DH/0.3.0@jw3/stable
+  particle-common/snapshot@jw3/stable
+  NeoGPS/snapshot@jw3/stable
+  LIS3DH/snapshot@jw3/stable
 
 [generators]
   cmake
