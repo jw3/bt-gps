@@ -59,10 +59,10 @@ void loop() {
 
          if(fix.valid.location) {
             if(!lastPos || movedAtLeast(moveThreshold, *lastPos, fix.location) || waitedAtLeast(lastEvent, EventInterval, millis)) {
-               auto lat = String(fix.location.latF(), 6);
-               auto lon = String(fix.location.lonF(), 6);
+               auto x = String(fix.location.lonF(), 6);
+               auto y = String(fix.location.latF(), 6);
                auto mph = String(static_cast<uint8_t>(fix.speed_mph()));
-               auto str = String::format("%s:%s:%s", lat.c_str(), lon.c_str(), mph.c_str());
+               auto str = String::format("%s:%s:%s", x.c_str(), y.c_str(), mph.c_str());
 
                lastEvent = millis();
                lastPos = make_optional(fix.location);
