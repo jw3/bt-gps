@@ -5,6 +5,8 @@
 #include <NMEAGPS.h>
 #include <init.h>
 
+#include <BuildInfo.h>
+
 using meters = double;
 using tick = system_tick_t;
 
@@ -38,7 +40,7 @@ OptLocation lastPos = nullopt;
 meters moveThreshold = 3;
 
 const String Id = String(CloudClass::deviceID()).substring(0, 6);
-const String ReadyEvent = String("R/") + Id;
+const String ReadyEvent = String("R/") + Id + "/" + BuildInfo::PluginVersion;  // todo;; move this off the heap
 const String MovedEvent = String("M/") + Id;
 
 // todo;; manual mode to control connections

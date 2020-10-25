@@ -1,0 +1,6 @@
+#pragma once
+
+namespace BuildInfo
+{
+   const char PluginVersion[] = "${FULL_VERSION_STRING}";
+}
