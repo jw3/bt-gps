@@ -40,6 +40,9 @@ include(BuildInfo)
 include(LIS3DH)
 include(NeoGPS)
 
+# todo;; fix this in conan lib
+include_directories(${FIRMWARE_DIR}/user/libraries)
+
 add_particle_remote_app(receiver)
 add_particle_remote_app(transmitter NeoGPS LIS3DH)
 add_particle_remote_app(transceiver NeoGPS LIS3DH)
