@@ -35,7 +35,7 @@ tick disconnectedAt = 0;
 tick connectingSince = 0;
 
 OptLocation lastPos = nullopt;
-meters moveThreshold = 2;
+meters moveThreshold = 3;
 
 const String Id = String(CloudClass::deviceID()).substring(0, 6);
 const String ReadyEvent = String("R/") + Id;
