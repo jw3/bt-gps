@@ -41,7 +41,13 @@ const String Id = String(CloudClass::deviceID()).substring(0, 6);
 const String ReadyEvent = String("R/") + Id;
 const String MovedEvent = String("M/") + Id;
 
+// todo;; manual mode to control connections
+/// SYSTEM_MODE(MANUAL)
+
 void setup() {
+   /// Cellular.on();
+   /// Cellular.connect();
+
    init();
    Particle.publish(ReadyEvent, PRIVATE);
 }
