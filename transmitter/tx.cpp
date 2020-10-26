@@ -40,7 +40,7 @@ OptLocation lastPos = nullopt;
 meters moveThreshold = 3;
 
 const String Id = String(CloudClass::deviceID()).substring(0, 6);
-const String ReadyEvent = String("R/") + Id + "/" + BuildInfo::PluginVersion;  // todo;; move this off the heap
+const String ReadyEvent = String("R/") + Id;  // todo;; move this off the heap
 const String MovedEvent = String("M/") + Id;
 
 // todo;; manual mode to control connections
@@ -53,7 +53,7 @@ void setup() {
    init();
 
    waitUntil(Particle.connected);
-   Particle.publish(ReadyEvent, PRIVATE);
+   Particle.publish(ReadyEvent, BuildInfo::PluginVersion, PRIVATE);
 }
 
 // state machine ...
