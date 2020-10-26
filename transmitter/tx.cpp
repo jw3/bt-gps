@@ -43,13 +43,10 @@ const String Id = String(CloudClass::deviceID()).substring(0, 6);
 const String ReadyEvent = String("R/") + Id;  // todo;; move this off the heap
 const String MovedEvent = String("M/") + Id;
 
-// todo;; manual mode to control connections
-/// SYSTEM_MODE(MANUAL)
+SerialLogHandler logHandler;
 
 void setup() {
-   /// Cellular.on();
-   /// Cellular.connect();
-
+   Log.info("Booting %s %s", ReadyEvent.c_str(), BuildInfo::PluginVersion);
    init();
 
    waitUntil(Particle.connected);
