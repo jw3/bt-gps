@@ -51,6 +51,8 @@ void setup() {
    /// Cellular.connect();
 
    init();
+
+   waitUntil(Particle.connected);
    Particle.publish(ReadyEvent, PRIVATE);
 }
 
